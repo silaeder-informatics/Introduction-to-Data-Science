@@ -3,6 +3,7 @@ import pandas as pd
 import vk
 from tqdm import tqdm
 import time
+import os
 
 session = vk.Session(access_token="38479e4a81d854219057927293934ed4d12b1c91afb966101385de82fc3d24310c0d5a039d4a907764504")
 vk_session = vk.API(session)
@@ -21,6 +22,7 @@ def test(subjects, now):
             return True
     return False
 
+
 data = pd.DataFrame(columns=['Date', 'Hour', 'Minute', 'Weekday', 'Weekday_number', 'Is_lesson' ,'Online_friends'])
 while (True):
     arr = vk_session.friends.getOnline(v=5.103)
@@ -31,5 +33,12 @@ while (True):
     data.loc[ind] = {'Date':now.day, 'Hour':now.hour, 'Minute':now.minute, 'Weekday':week[now.weekday()], 'Weekday_number':now.weekday(), 'Is_lesson':[0, 1][test(subjects, now)], 'Online_friends':len(arr)}
     data.to_csv(filename, index=False)
     ind += 1
+
+    if (ind - 1) % 300 == 0:
+        os.system('git add .')
+        os.system('git commit -m "system save"')
+        os.system('git push')
+        os.system('pavTiger')
+        os.system('kebab-case-password')
 
     time.sleep(60)
