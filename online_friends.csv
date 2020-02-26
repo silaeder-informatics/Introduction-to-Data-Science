@@ -1,5 +1,2 @@
-Date,Hour,Minute,Second,Weekday,Weekday_number,Online_friends
-26,6,35,42,Wednesday,2,5
-26,6,35,52,Wednesday,2,5
-26,6,36,2,Wednesday,2,5
-26,6,36,12,Wednesday,2,5
+Date,Hour,Minute,Weekday,Weekday_number,Is_lesson,Online_friends
+26,16,13,Wednesday,2,1,31
