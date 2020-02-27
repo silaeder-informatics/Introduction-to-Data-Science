@@ -34,11 +34,4 @@ while (True):
     data.to_csv(filename, index=False)
     ind += 1
 
-    if (ind - 1) % 300 == 0:
-        os.system('git add .')
-        os.system('git commit -m "system save"')
-        os.system('git push')
-        os.system('pavTiger')
-        os.system('kebab-case-password')
-
     time.sleep(60)
