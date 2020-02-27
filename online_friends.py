@@ -1,7 +1,6 @@
 import datetime
 import pandas as pd
 import vk
-from tqdm import tqdm
 import time
 import os
 
