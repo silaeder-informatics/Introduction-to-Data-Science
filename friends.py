@@ -4,7 +4,7 @@ import vk
 import time
 import os
 
-from token import token
+from my_token import token
 
 session = vk.Session(access_token=token)
 vk_session = vk.API(session)
@@ -45,3 +45,4 @@ while (True):
     ind += 1
 
     time.sleep(60)
+
