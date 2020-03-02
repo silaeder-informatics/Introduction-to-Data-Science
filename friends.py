@@ -4,8 +4,9 @@ import vk
 import time
 import os
 
+from token import token
 
-session = vk.Session(access_token="38479e4a81d854219057927293934ed4d12b1c91afb966101385de82fc3d24310c0d5a039d4a907764504")
+session = vk.Session(access_token=token)
 vk_session = vk.API(session)
 filename = 'online_friends.csv' 
 week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
