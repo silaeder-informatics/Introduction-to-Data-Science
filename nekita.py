@@ -30,8 +30,7 @@ while (True):
     for user_id in online_friends:
         status = vk_session.status.get(v=5.103, user_id=user_id)
         user = vk_session.users.get(v=5.103, user_id=user_id)[0]
-        print(user)
-
+        
         now = datetime.datetime.now()
         data.loc[ind] = {'Date':now, 'User_first_name':user['first_name'], 'User_last_name':user['last_name'], 'Is_closed':user['is_closed'], 'User_sex':'Nan', 'User_age':'Nan', 'User_status':status['text']}
 
