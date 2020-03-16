@@ -4,38 +4,39 @@ import vk
 import time
 import os
 
-from token import token
+from my_token import token
 
 session = vk.Session(access_token=token)
 vk_session = vk.API(session)
 
 week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 subjects = [['9:00', '9:40'], ['9:45', '10:25'], ['10:35', '11:15'], ['11:20', '12:00'], ['12:20', '13:00'], ['13:05', '13:45'], ['14:35', '15:15'], ['15:20', '16:00'], ['16:10', '16:50'], ['16:55', '17:35']]
-filename = 'data.csv' 
-
-time_array = []
+filename = 'friends_data.csv' 
 ind = 0
 
-nikita_id = 429454563
-friends = []
 
-def test(subjects, now):
-    for elem in subjects:
-        t = elem[0].split(':')
-        t2 = elem[1].split(':')
-        if (int(t[0]) * 60 + int(t[1])) < now.hour * 60 + now.minute and (int(t2[0]) * 60 + int(t2[1])) > now.hour * 60 + now.minute:
-            return True
-    return False 
+try:
+    data = pd.read_csv(filename)
+    print(len(data['Date']))
+    ind = len(data['Date'])
+except:
+    ind = 0
+    print('remade')
+    data = pd.DataFrame(columns=['Date', 'User_first_name', 'User_last_name', 'Is_closed', 'User_sex', 'User_age', 'User_status'])
 
-
-data = pd.DataFrame(columns=['Date', 'Hour', 'Minute', 'Second', 'Weekday', 'Weekday_number', 'Is_lesson' ,'Online_friends', 'Nikita_online'])
 while (True):
-    arr = vk_session.friends.getOnline(v=5.103)
+    online_friends = vk_session.friends.getOnline(v=5.103)
 
-    now = datetime.datetime.now()
-    print(test(subjects, now))
-    data.loc[ind] = {'Date':now.day, 'Hour':now.hour, 'Minute':now.minute, 'Second':now.second, 'Weekday':week[now.weekday()], 'Weekday_number':now.weekday(), 'Is_lesson':[0, 1][test(subjects, now)], 'Online_friends':len(arr), 'Nikita_online':nikita_id in arr}
+    for user_id in online_friends:
+        status = vk_session.status.get(v=5.103, user_id=user_id)
+        user = vk_session.users.get(v=5.103, user_id=user_id)[0]
+        print(user)
+
+        now = datetime.datetime.now()
+        data.loc[ind] = {'Date':now, 'User_first_name':user['first_name'], 'User_last_name':user['last_name'], 'Is_closed':user['is_closed'], 'User_sex':'Nan', 'User_age':'Nan', 'User_status':status['text']}
+
+        time.sleep(1)
+        ind += 1
+    
     data.to_csv(filename, index=False)
-    ind += 1
-
-    time.sleep(10)
+    time.sleep(30)
