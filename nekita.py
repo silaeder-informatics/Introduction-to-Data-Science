@@ -22,7 +22,7 @@ try:
 except:
     ind = 0
     print('remade')
-    data = pd.DataFrame(columns=['Date', 'User_first_name', 'User_last_name', 'Is_closed', 'User_sex', 'User_age', 'User_status'])
+    data = pd.DataFrame(columns=['Date', 'User_first_name', 'User_last_name', 'User_id', 'Is_closed', 'User_sex', 'User_age', 'User_status'])
 
 while (True):
     online_friends = vk_session.friends.getOnline(v=5.103)
@@ -32,7 +32,7 @@ while (True):
         user = vk_session.users.get(v=5.103, user_id=user_id)[0]
         
         now = datetime.datetime.now()
-        data.loc[ind] = {'Date':now, 'User_first_name':user['first_name'], 'User_last_name':user['last_name'], 'Is_closed':user['is_closed'], 'User_sex':'Nan', 'User_age':'Nan', 'User_status':status['text']}
+        data.loc[ind] = {'Date':now, 'User_first_name':user['first_name'], 'User_last_name':user['last_name'], 'User_id':user_id, 'Is_closed':user['is_closed'], 'User_sex':'Nan', 'User_age':'Nan', 'User_status':status['text']}
 
         time.sleep(1)
         ind += 1
