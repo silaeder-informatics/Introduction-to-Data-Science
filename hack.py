@@ -28,7 +28,7 @@ while (True):
 
 
     path = f'https://storage.geekclass.ru/images/{gener}.ipynb'
-    print(ind, path)
+    # print(ind, path)
     answer = requests.get(path)
 
     if answer.status_code == 200:
